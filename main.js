@@ -1,7 +1,11 @@
 // main.js
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 
 let mainWindow;
+
+ipcMain.on('ckeditor:getData', (err, datum) => {
+  console.log('datum: ', datum);
+})
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow () {
@@ -17,7 +21,7 @@ function createWindow () {
   })
 
   // Load index.html into the new BrowserWindow
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('index.html');
 
   // Open DevTools - Remove for PRODUCTION!
   mainWindow.webContents.openDevTools();

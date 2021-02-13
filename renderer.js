@@ -1,3 +1,7 @@
 // empty for now
+const {ipcRenderer} = require('electron');
 
-console.log('wEditor: ', window.editor);
+document.querySelector('#btn-submit').addEventListener('click', () => {
+  const editorData = editor.getData();
+  ipcRenderer.send('ckeditor:getData', {editorData});
+});
