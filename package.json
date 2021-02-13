@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "watch": "nodemon --exec electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/movaclub/elektron-ckeditor#readme",
   "devDependencies": {
     "electron": "^11.2.3",
+    "nodemon": "^2.0.7",
     "webpack": "^5.21.2"
   },
   "dependencies": {

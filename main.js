@@ -1,62 +1,55 @@
 // main.js
 const {app, BrowserWindow} = require('electron');
 
-let win = null;
+let mainWindow;
 
-app.on('ready', () => {
-  win = new BrowserWindow({
-    width: 1000,
-    height: 780,
+// Create a new BrowserWindow when `app` is ready
+function createWindow () {
+
+  mainWindow = new BrowserWindow({
+    width: 1000, height: 800,
+    title: 'CDKElectron',
+    icon: './assets/favicon.ico',
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
-  });
-  win.loadFile('index.html');
+  })
 
-  const contents = win.webContents;
-// console.log('Wconts: ', contents);
+  // Load index.html into the new BrowserWindow
+  mainWindow.loadFile('index.html')
 
+  // Open DevTools - Remove for PRODUCTION!
+  mainWindow.webContents.openDevTools();
+  // this method allow code injection
+  // mainWindow.webContents.executeJavaScript('window.editor')
+  //   .then( res => console.log(res))
+  //   .catch( e => console.error(e));
 
-  win.on('did-finish-load', () => {
-    alert('Wconts: ', contents);
-  });
+  // Listen for window being closed
+  mainWindow.on('closed',  () => {
+    mainWindow = null
+  })
+}
 
-});
-
-
-// function createWindow() {
-//   win = new BrowserWindow({
-//     width: 1000,
-//     height: 780,
-//     webPreferences: {
-//       nodeIntegration: true
-//     }
-//   });
-//   win.loadFile('index.html');
-//   // const cke = win.getElementById('#editor');
-//   // console.log('CKE: ', cke);
-//   // const contents = win.webContents
-//   // console.log('WebContent: ', JSON.stringify(contents));
-// }
-//
-// // app.whenReady().then(createWindow);
-//
+// Electron `app` is ready
+app.on('ready', createWindow);
 // app.on('ready', () => {
-//   createWindow();
-//   win.on('open', () => {
-//     win.openDevTools();
-//     let cke = win.getElementById('#editor');
-//     console.log('CKE: ', cke);
-//   });
-// });
 //
+//   // console.log(app.getPath('desktop'))
+//   // console.log(app.getPath('music'))
+//   // console.log(app.getPath('temp'))
+//   // console.log(app.getPath('userData'))
 //
-// app.on('window-all-closed', () => {
-//   app.quit();
-// });
-//
-// app.on('activate', () => {
-//   if (BrowserWindow.getAllWindows().length === 0) {
-//     createWindow();
-//   }
-// });
+//   createWindow()
+// })
+
+// Quit when all windows are closed - (Not macOS - Darwin)
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit()
+})
+
+// When app icon is clicked and app is running, (macOS) recreate the BrowserWindow
+app.on('activate', () => {
+  if (mainWindow === null) createWindow()
+})

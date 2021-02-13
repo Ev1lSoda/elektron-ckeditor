@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>CKEditor in Electron</title>
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'" />
   <style type="text/css">
     div#editor { display: block; height: 69em;}
   </style>
@@ -21,10 +21,11 @@
     .create( document.querySelector( '#editor' ) )
     .then( editor => {
       window.editor = editor;
-    } )
+    })
     .catch( error => {
       console.error( 'There was a problem initializing the editor.', error );
     } );
 </script>
+<script>require('./renderer.js')</script>
 </body>
 </html>
